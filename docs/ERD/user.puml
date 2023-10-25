@@ -1,0 +1,64 @@
+@startuml ERD
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity "User" as user {
+    *user_id : UUIDv4 <<generated>>
+    --
+    *cpf: text
+    *first_name: text
+    *last_name: text
+    *email: text
+    *role: enum
+}
+
+entity "Auth" as auth {
+    *auth_id : UUIDv4 <<generated>>
+    --
+    *hashed_password: text
+    *user_id: UUIDv4
+}
+
+entity "Plan" as plan {
+    *plan_id : UUIDv4 <<generated>>
+    --
+    name : text
+    price : number
+    number_of_essays : number
+    active : boolean
+}
+
+entity "Essay" as essay {
+    *essay_id : UUIDv4 <<generated>>
+    --
+    date : Date
+    file_location : text
+}
+
+entity "Subscription" as subscription {
+    *subscription_id : UUIDv4 <<generated>>
+    --
+    user_id : number <<FK>>
+    plan_id : number <<FK>>
+    start_date : Date
+}
+
+entity "Assignment" as assignment {
+    *assignment_id : UUIDv4 <<generated>>
+    --
+    *subscription_id : number <<FK>>
+    *essay_id: number <<FK>>
+    *assigment_date : Date
+    *due_date: Date
+}
+
+user ||..o{ subscription
+user ||..|| auth
+plan ||..o{ subscription
+' assignment }o..|| user
+assignment ||..|| essay
+assignment }o..|| subscription
+@enduml

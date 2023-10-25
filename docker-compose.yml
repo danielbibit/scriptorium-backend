@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+    db:
+        container_name: scriptorium-db
+        image: postgres:13.1-alpine
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: scriptorium
+        ports:
+            - 5432:5432
+        restart: unless-stopped
+
+    scriptorium-backend:
+        container_name: scriptorium-backend
+        depends_on:
+            - db
+        image: scriptorium-backend
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: unless-stopped
+
+networks:
+    scriptorium_net:
+        name: scriptorium_net
+        driver: bridge
