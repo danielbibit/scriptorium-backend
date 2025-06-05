@@ -1,27 +1,22 @@
 dev:
-	uvicorn scriptorium.__main__:app --reload
+	uv run uvicorn scriptorium.__main__:app --reload
 
 test:
-	pytest
+	uv run pytest
 
 format:
-	black .
+	uv run ruff format .
 
-check: check_black check_ruff
+check: check_ruff
 
-db_migrate:
-	echo "hello multiline";\
-	alembic upgrade head
+db-migrate:
+	uv run alembic upgrade head
 
-db_destroy:
-	alembic downgrade base
+db-destroy:
+	uv run alembic downgrade base
 
-db_generate_migration:
-	alembic revision --autogenerate -m "$(name)"
+db-generate_migration:
+	uv run alembic revision --autogenerate -m "$(name)"
 
 check_ruff:
-	ruff check .
-
-check_black:
-	black . --check
-
+	uv run ruff check .

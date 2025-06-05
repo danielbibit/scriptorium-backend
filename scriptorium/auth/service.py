@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 import bcrypt
 from jose import JWTError, jwt
@@ -46,8 +46,8 @@ def authenticate_user(db: Session, email: str, password: str) -> auth_schemas.Au
 
     jwt_token = auth_schemas.JWTToken(
         sub=str(auth_data.user_id),
-        exp=datetime.utcnow() + timedelta(minutes=60),
-        iat=datetime.utcnow(),
+        exp=datetime.now(timezone.utc) + timedelta(minutes=60),
+        iat=datetime.now(timezone.utc),
     )
 
     log.debug("JWT Token creation data %s", jwt_token)
