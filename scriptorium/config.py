@@ -1,8 +1,4 @@
-import logging
-
 from pydantic_settings import BaseSettings, SettingsConfigDict
-
-log = logging.getLogger(__name__)
 
 
 class Settings(BaseSettings):
@@ -15,6 +11,7 @@ class Settings(BaseSettings):
 
     LOG_LEVEL: str = "ERROR"
 
+    ENVIRONMENT: str = "development"
 
-# Settings are loaded from .env file
+
 config = Settings()  # type: ignore

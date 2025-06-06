@@ -25,7 +25,7 @@ class User(BaseModel):
 class UserORM(Base):
     __tablename__ = "users"
 
-    id: Mapped[str] = mapped_column(UUID(as_uuid=True), primary_key=True, init=False, default=uuid4())
+    id: Mapped[UUIDType] = mapped_column(UUID(as_uuid=True), primary_key=True, init=False, default=uuid4())
     name: Mapped[str] = mapped_column(String(30))
     email: Mapped[str] = mapped_column(String(40), unique=True)
     full_name: Mapped[Optional[str]] = mapped_column(default=None)

@@ -1,13 +1,12 @@
-import logging
-
 from sqlalchemy.orm import Session
 
 from scriptorium.auth import service as auth_service
+from scriptorium.logging import get_logger
 from scriptorium.users import models as users_models
 from scriptorium.users import repository as users_repository
 from scriptorium.users import schemas as users_schemas
 
-log = logging.getLogger(__name__)
+log = get_logger()
 
 
 async def get_current_user(db: Session, token: str) -> users_models.User:

@@ -1,4 +1,3 @@
-import logging
 from typing import Annotated
 
 import sqlalchemy
@@ -10,8 +9,9 @@ from sqlalchemy.orm import (
 )
 
 from scriptorium.config import config
+from scriptorium.logging import get_logger
 
-log = logging.getLogger(__name__)
+log = get_logger()
 
 engine = sqlalchemy.create_engine(config.DB_STRING_CONNECTION)
 metadata = sqlalchemy.MetaData()
@@ -24,6 +24,8 @@ class Base(MappedAsDataclass, DeclarativeBase):
 
 
 def get_db():
+    log.debug("Generating new db session")
+
     db = SessionLocal()
 
     try:
