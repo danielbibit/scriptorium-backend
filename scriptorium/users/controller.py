@@ -22,7 +22,9 @@ def read_users(
 
 
 @router.post("/users")
-def create_user(db: Annotated[Session, Depends(database.get_db)], user: users_schemas.UserCreate) -> users_models.User:
+def create_user(
+    db: Annotated[Session, Depends(database.get_db)], user: users_schemas.UserCreate
+) -> users_models.User:
     return users_service.create_user(db, user)
 
 

@@ -15,7 +15,7 @@ db-migrate:
 db-destroy:
 	uv run alembic downgrade base
 
-db-generate_migration:
+db-generate-migration:
 	uv run alembic revision --autogenerate -m "$(name)"
 
 check_ruff:

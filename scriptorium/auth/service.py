@@ -1,4 +1,3 @@
-import logging
 from datetime import datetime, timedelta, timezone
 
 import bcrypt
@@ -9,9 +8,10 @@ from scriptorium.auth import repository as auth_repository
 from scriptorium.auth import schemas as auth_schemas
 from scriptorium.auth.exceptions import InvalidCredentials, InvalidToken
 from scriptorium.config import config
+from scriptorium.logging import get_logger
 from scriptorium.users import repository as users_repository
 
-log = logging.getLogger(__name__)
+log = get_logger()
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -32,15 +32,17 @@ def create_access_token(token_data: auth_schemas.JWTToken) -> str:
 
 
 def authenticate_user(db: Session, email: str, password: str) -> auth_schemas.AuthTokenResponse:
+    log.debug("Authenticating user with email: %s", email)
+
     auth_data = auth_repository.get_auth_by_email(db, email)
 
     if not auth_data:
-        log.debug("Token not provided")
+        log.error("Token not provided")
 
         raise InvalidCredentials()
 
     if not verify_password(password, auth_data.hashed_password):
-        log.debug("Invalid password for user %s", email)
+        log.error("Invalid password for user %s", email)
 
         raise InvalidCredentials()
 

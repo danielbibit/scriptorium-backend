@@ -1,14 +1,12 @@
-import logging
-
 from fastapi import FastAPI
 
+import scriptorium.logging as logging
 from scriptorium.auth import controller as auth_controller
-from scriptorium.logging import configure_logging
 from scriptorium.users import controller as users_controller
 
-configure_logging()
+logging.configure_logging()
 
-log = logging.getLogger(__name__)
+log = logging.get_logger()
 
 app = FastAPI()
 

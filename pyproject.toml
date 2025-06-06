@@ -6,7 +6,6 @@ authors = [{ name = "Daniel Moraes", email = "danielbibit@gmail.com" }]
 requires-python = "~=3.12"
 readme = "README.md"
 dependencies = [
-    "fastapi>=0.103.2,<0.104",
     "sqlalchemy>=2.0.21,<3",
     "psycopg2>=2.9.9,<3",
     "alembic>=1.12.0,<2",
@@ -15,6 +14,7 @@ dependencies = [
     "bcrypt>=4.0.1,<5",
     "pydantic-settings>=2.0.3,<3",
     "faker>=19.10.0,<20",
+    "fastapi>=0.110.3",
 ]
 
 [project.scripts]
@@ -33,16 +33,16 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.ruff]
-line-length=120
+line-length=110
+exclude = [
+    "env.py", #TODO remove this
+]
 
+[lint]
 select = [
     "I",
     "E",
     "W",
     "F",
     "C",
-]
-
-exclude = [
-    "env.py", #TODO remove this
 ]

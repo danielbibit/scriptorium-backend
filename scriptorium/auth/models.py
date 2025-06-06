@@ -23,13 +23,21 @@ class Auth(BaseModel):
 class AuthORM(Base):
     __tablename__ = "auth"
 
-    id: Mapped[str] = mapped_column(UUID(as_uuid=True), primary_key=True, init=False, default=uuid4())
+    id: Mapped[UUIDType] = mapped_column(UUID(as_uuid=True), primary_key=True, init=False, default=uuid4())
 
     hashed_password: Mapped[str] = mapped_column(String(64))
-    user_id: Mapped[str] = mapped_column(ForeignKey("users.id"))
+    user_id: Mapped[UUIDType] = mapped_column(ForeignKey("users.id"))
     user: Mapped["users_models.UserORM"] = relationship("UserORM", init=False, single_parent=True)
 
     __table_args__ = (UniqueConstraint("user_id"),)
+
+    def to_model(self) -> Auth:
+        return Auth(
+            id=self.id,
+            hashed_password=self.hashed_password,
+            user_id=self.user_id,
+            user=self.user.to_model(),
+        )
 
 
 def create_fake_auth() -> Auth:
