@@ -9,4 +9,3 @@ RUN apk add --no-cache \
 
 COPY . /app
 
-WORKDIR /app
