@@ -5,7 +5,4 @@ RUN apk add --no-cache \
     git \
     openssh \
     libpq-dev \
-    build-base \
-
-COPY . /app
-
+    build-base
