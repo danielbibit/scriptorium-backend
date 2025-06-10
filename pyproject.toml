@@ -1,12 +1,28 @@
-[tool.poetry]
+[project]
 name = "scriptorium"
 version = "0.1.0"
 description = ""
-authors = ["Daniel Moraes <danielbibit@gmail.com>"]
+authors = [{ name = "Daniel Moraes", email = "danielbibit@gmail.com" }]
+requires-python = "~=3.12"
 readme = "README.md"
+dependencies = [
+    "sqlalchemy>=2.0.21,<3",
+    "psycopg2>=2.9.9,<3",
+    "alembic>=1.12.0,<2",
+    "python-multipart>=0.0.6,<0.0.7",
+    "python-jose[cryptography]>=3.3.0,<4",
+    "bcrypt>=4.0.1,<5",
+    "pydantic-settings>=2.0.3,<3",
+    "faker>=19.10.0,<20",
+    "fastapi>=0.110.3",
+]
+
+[project.scripts]
+dev = "scripts:dev"
+migrate = "scripts:migrate"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.12"
 fastapi = "^0.103.2"
 sqlalchemy = "^2.0.21"
 psycopg2 = "^2.9.9"
@@ -17,35 +33,28 @@ bcrypt = "^4.0.1"
 pydantic-settings = "^2.0.3"
 faker = "^19.10.0"
 
-
-[tool.poetry.group.dev.dependencies]
-uvicorn = {extras = ["standard"], version = "^0.23.2"}
-pytest = "^7.4.2"
-black = "^23.9.1"
-ruff = "^0.0.292"
+[dependency-groups]
+dev = [
+    "uvicorn[standard]>=0.23.2,<0.24",
+    "pytest>=7.4.2,<8",
+    "ruff>=0.11.13",
+]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-
-[tool.poetry.scripts]
-dev = 'scripts:dev'
-migrate = 'scripts:migrate'
-
-[tool.black]
-line-length = 110
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.ruff]
+line-length=110
+exclude = [
+    "env.py", #TODO remove this
+]
+
+[lint]
 select = [
     "I",
     "E",
     "W",
     "F",
     "C",
-]
-ignore = [
-    "E501",  # line too long, handled by black
-]
-exclude = [
-    "env.py", #TODO remove this
 ]

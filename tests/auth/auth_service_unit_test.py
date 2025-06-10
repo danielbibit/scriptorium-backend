@@ -55,7 +55,8 @@ def test_authenticate_user_raises_when_not_found(monkeypatch: MonkeyPatch):
     from scriptorium.auth import exceptions, service
 
     monkeypatch.setattr(
-        "scriptorium.auth.repository.get_auth_by_email", lambda db, email: None  # type: ignore
+        "scriptorium.auth.repository.get_auth_by_email",
+        lambda db, email: None,  # type: ignore
     )
 
     with pytest.raises(exceptions.InvalidCredentials):

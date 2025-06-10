@@ -5,7 +5,7 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from scriptorium.config import DB_STRING_CONNECTION
+import scriptorium.config as config_module
 from scriptorium.database import Base
 from scriptorium.users.models import User
 from scriptorium.auth.models import Auth
@@ -20,7 +20,7 @@ if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
 
-config.set_main_option("sqlalchemy.url", DB_STRING_CONNECTION)
+config.set_main_option("sqlalchemy.url", config_module.config.DB_STRING_CONNECTION)
 # add your model's MetaData object here
 # for 'autogenerate' support
 # from myapp import mymodel
